@@ -587,25 +587,41 @@ async function processPriceHistory(days, priceHistories, source, connection) {
     }
 }
 
-function startChilds(sources) { 
+function startChilds(sources) {     
+    console.log("Starting child")
     sources.forEach((source, index) => {
-      // Create a progress bar for each source
-      const bar = new ProgressBar(`${source} [:bar] :percent`, {
-        complete: '=',
-        incomplete: ' ',
-        width: 20,
-        total: 100
-      });
-  
-      // Simulate progress updates for demonstration purposes
-      const interval = setInterval(() => {
-        bar.tick();
-        if (bar.complete) {
-          clearInterval(interval);
+        // Create a progress bar for each source
+        
+        delay(100);
+
+        process.stdout.write(source+colors.reset+' - '+colors.green);
+
+        bars[source] = new ProgressBar(colors.green+`${source} [:bar] :percent `+colors.magenta+source, {
+            complete: '=',
+            incomplete: ' ',
+            width: 20,
+            total: 100
+        });
+
+        if (index > startingChilds-1) {
+            setTimeout(() => {
+                const child = fork('price.js', [source]);
+                // child.on('message', (msg) => {
+                //     if (msg.type === 'progress') {
+                //         bars[source].tick(msg.progress - bars[source].curr);
+                //     }
+                // });
+            }, (index - startingChilds-1) * 1000);
+        } else {
+            // const child = fork('price.js', [source]);
+            // child.on('message', (msg) => {
+            //     if (msg.type === 'progress') {
+            //         bars[source].tick(msg.progress - bars[source].curr);
+            //     }
+            // });
         }
-      }, 100);
     });
-  }
+}
 
 function calculatePopularity(liquidity, count, price, percentage) {
     // Normalization (converting input values to a scale of 0 to 1)
