@@ -1,0 +1,47 @@
+{
+  "dependencies": {
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.3",
+    "nodemon": "^2.0.22",
+    "progress": "^2.0.3",
+    "puppeteer": "^19.10.1",
+    "puppeteer-core": "^19.10.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/jontewks/puppeteer-heroku-buildpack"
+    },
+    {
+      "url": "https://github.com/minted/heroku-buildpack-chrome-headless"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+    }
+  ],
+  "name": "csgoskins-db",
+  "description": "A Node.js application that creates a MySQL database containing CSGO skins and their market data from PriceEmpire.",
+  "version": "1.0.0",
+  "main": "price.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon price.js ",
+    "price": "node price.js" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L4rsS/csgoskins-db.git"
+  },
+  "author": "L4rs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/L4rsS/csgoskins-db/issues"
+  },
+  "homepage": "https://github.com/L4rsS/csgoskins-db#readme"
+}
